@@ -40,17 +40,16 @@ builder.Services.AddOpenApi(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.MapOpenApi();
+
+
+app.MapScalarApiReference("/api/v1",options =>
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options.WithTitle("DayOne API")
-               .WithTheme(ScalarTheme.Purple)
-               .AddPreferredSecuritySchemes("Bearer")
-               .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-    });
-}
+    options.WithTitle("DayOne API")
+           .WithTheme(ScalarTheme.Purple)
+           .AddPreferredSecuritySchemes("Bearer")
+           .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+});
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
