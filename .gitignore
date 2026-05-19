@@ -1,0 +1,100 @@
+
+# .NET MAUI / Xamarin
+*.user
+*.suo
+.vs/
+bin/
+obj/
+packages/
+*.userprefs
+*.usertasks
+
+# Visual Studio
+.vs/
+*.rsuser
+*.vsp
+*.vspx
+*.sap
+*.bak
+*.tmp
+*.cache
+*.pidb
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!**/packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+local.properties
+
+# iOS / macOS
+*.ipa
+*.dSYM/
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Windows
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+AppPackages/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Environment / secrets
+.env
+.env.*
+appsettings.Development.json
+secrets.json
