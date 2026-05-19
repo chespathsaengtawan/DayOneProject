@@ -9,6 +9,10 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Railway sets PORT env variable
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -51,7 +55,6 @@ app.MapScalarApiReference("/api/v1",options =>
            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
 });
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

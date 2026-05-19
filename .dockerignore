@@ -1,0 +1,10 @@
+.git
+.vs
+bin
+obj
+*.user
+*.suo
+*.http
+migration.sql
+appsettings.Development.json
+.env.local
