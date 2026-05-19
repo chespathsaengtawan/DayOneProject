@@ -51,6 +51,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("EventCalendar", policy =>
+        policy.WithOrigins("https://event-calendar-timeline.vercel.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
+});
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(options =>
@@ -63,12 +73,13 @@ app.MapOpenApi();
 
 app.MapScalarApiReference("/api/v1",options =>
 {
-    options.WithTitle("DayOne API")
+    options.WithTitle("Event Calendar API")
            .WithTheme(ScalarTheme.Purple)
            .AddPreferredSecuritySchemes("Bearer")
            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
 });
 
+app.UseCors("EventCalendar");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
