@@ -17,8 +17,22 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Auth
+// Auth & Services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IEventImageService, EventImageService>();
+builder.Services.AddScoped<IFileStorageService, SupabaseStorageService>();
+builder.Services.AddScoped<IShareService, ShareService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+// Supabase HTTP client for storage
+builder.Services.AddHttpClient("supabase", (sp, client) =>
+{
+    var cfg = sp.GetRequiredService<IConfiguration>();
+    client.DefaultRequestHeaders.Authorization =
+        new System.Net.Http.Headers.AuthenticationHeaderValue(
+            "Bearer", cfg["Supabase:ServiceRoleKey"] ?? string.Empty);
+});
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"]!;
