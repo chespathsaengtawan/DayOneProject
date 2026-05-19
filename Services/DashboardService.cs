@@ -38,17 +38,19 @@ public class DashboardService : IDashboardService
             .Take(10)
             .Select(e => new EventResponse
             {
-                Id          = e.Id,
-                UserId      = e.UserId,
-                Title       = e.Title,
-                Description = e.Description,
-                EventDate   = e.EventDate,
-                StartTime   = e.StartTime,
-                EndTime     = e.EndTime,
-                IsAllDay    = e.IsAllDay,
-                Category    = e.Category,
-                CreatedAt   = e.CreatedAt,
-                UpdatedAt   = e.UpdatedAt
+                Id             = e.Id,
+                UserId         = e.UserId,
+                OwnerFirstName = e.User!.FirstName,
+                OwnerLastName  = e.User!.LastName,
+                Title          = e.Title,
+                Description    = e.Description,
+                EventDate      = e.EventDate,
+                StartTime      = e.StartTime,
+                EndTime        = e.EndTime,
+                IsAllDay       = e.IsAllDay,
+                Category       = e.Category,
+                CreatedAt      = e.CreatedAt,
+                UpdatedAt      = e.UpdatedAt
             })
             .ToListAsync();
 
@@ -65,17 +67,19 @@ public class DashboardService : IDashboardService
             .Take(5)
             .Select(e => new EventResponse
             {
-                Id          = e.Id,
-                UserId      = e.UserId,
-                Title       = e.Title,
-                Description = e.Description,
-                EventDate   = e.EventDate,
-                StartTime   = e.StartTime,
-                EndTime     = e.EndTime,
-                IsAllDay    = e.IsAllDay,
-                Category    = e.Category,
-                CreatedAt   = e.CreatedAt,
-                UpdatedAt   = e.UpdatedAt
+                Id             = e.Id,
+                UserId         = e.UserId,
+                OwnerFirstName = e.User!.FirstName,
+                OwnerLastName  = e.User!.LastName,
+                Title          = e.Title,
+                Description    = e.Description,
+                EventDate      = e.EventDate,
+                StartTime      = e.StartTime,
+                EndTime        = e.EndTime,
+                IsAllDay       = e.IsAllDay,
+                Category       = e.Category,
+                CreatedAt      = e.CreatedAt,
+                UpdatedAt      = e.UpdatedAt
             })
             .ToListAsync();
 

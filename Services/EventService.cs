@@ -20,7 +20,7 @@ public class EventService : IEventService
             .Where(e => e.UserId == userId && e.EventDate == date)
             .OrderBy(e => e.IsAllDay ? 0 : 1)
             .ThenBy(e => e.StartTime)
-            .Select(e => ToResponse(e))
+            .Select(e => ToResponse(e, e.User!))
             .ToListAsync();
     }
 
@@ -34,16 +34,17 @@ public class EventService : IEventService
             .OrderBy(e => e.EventDate)
             .ThenBy(e => e.IsAllDay ? 0 : 1)
             .ThenBy(e => e.StartTime)
-            .Select(e => ToResponse(e))
+            .Select(e => ToResponse(e, e.User!))
             .ToListAsync();
     }
 
     public async Task<EventResponse?> GetByIdAsync(Guid userId, Guid eventId)
     {
         var ev = await _db.Events
+            .Include(e => e.User)
             .FirstOrDefaultAsync(e => e.Id == eventId && e.UserId == userId);
 
-        return ev is null ? null : ToResponse(ev);
+        return ev is null ? null : ToResponse(ev, ev.User!);
     }
 
     public async Task<EventResponse> CreateAsync(Guid userId, CreateEventRequest request)
@@ -64,8 +65,9 @@ public class EventService : IEventService
 
         _db.Events.Add(ev);
         await _db.SaveChangesAsync();
+        await _db.Entry(ev).Reference(e => e.User).LoadAsync();
 
-        return ToResponse(ev);
+        return ToResponse(ev, ev.User!);
     }
 
     public async Task<EventResponse?> UpdateAsync(Guid userId, Guid eventId, UpdateEventRequest request)
@@ -85,8 +87,9 @@ public class EventService : IEventService
         ev.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync();
+        await _db.Entry(ev).Reference(e => e.User).LoadAsync();
 
-        return ToResponse(ev);
+        return ToResponse(ev, ev.User!);
     }
 
     public async Task<bool> DeleteAsync(Guid userId, Guid eventId)
@@ -102,18 +105,20 @@ public class EventService : IEventService
         return true;
     }
 
-    private static EventResponse ToResponse(Event ev) => new()
+    private static EventResponse ToResponse(Event ev, User user) => new()
     {
-        Id          = ev.Id,
-        UserId      = ev.UserId,
-        Title       = ev.Title,
-        Description = ev.Description,
-        EventDate   = ev.EventDate,
-        StartTime   = ev.StartTime,
-        EndTime     = ev.EndTime,
-        IsAllDay    = ev.IsAllDay,
-        Category    = ev.Category,
-        CreatedAt   = ev.CreatedAt,
-        UpdatedAt   = ev.UpdatedAt
+        Id             = ev.Id,
+        UserId         = ev.UserId,
+        OwnerFirstName = user.FirstName,
+        OwnerLastName  = user.LastName,
+        Title          = ev.Title,
+        Description    = ev.Description,
+        EventDate      = ev.EventDate,
+        StartTime      = ev.StartTime,
+        EndTime        = ev.EndTime,
+        IsAllDay       = ev.IsAllDay,
+        Category       = ev.Category,
+        CreatedAt      = ev.CreatedAt,
+        UpdatedAt      = ev.UpdatedAt
     };
 }

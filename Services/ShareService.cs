@@ -102,17 +102,19 @@ public class ShareService : IShareService
                 SharedAt           = s.CreatedAt,
                 Event = new EventResponse
                 {
-                    Id          = s.Event!.Id,
-                    UserId      = s.Event.UserId,
-                    Title       = s.Event.Title,
-                    Description = s.Event.Description,
-                    EventDate   = s.Event.EventDate,
-                    StartTime   = s.Event.StartTime,
-                    EndTime     = s.Event.EndTime,
-                    IsAllDay    = s.Event.IsAllDay,
-                    Category    = s.Event.Category,
-                    CreatedAt   = s.Event.CreatedAt,
-                    UpdatedAt   = s.Event.UpdatedAt
+                    Id             = s.Event!.Id,
+                    UserId         = s.Event.UserId,
+                    OwnerFirstName = s.SharedByUser!.FirstName,
+                    OwnerLastName  = s.SharedByUser!.LastName,
+                    Title          = s.Event.Title,
+                    Description    = s.Event.Description,
+                    EventDate      = s.Event.EventDate,
+                    StartTime      = s.Event.StartTime,
+                    EndTime        = s.Event.EndTime,
+                    IsAllDay       = s.Event.IsAllDay,
+                    Category       = s.Event.Category,
+                    CreatedAt      = s.Event.CreatedAt,
+                    UpdatedAt      = s.Event.UpdatedAt
                 }
             })
             .ToListAsync();

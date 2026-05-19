@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("EventCalendar", policy =>
-        policy.WithOrigins("https://event-calendar-timeline.vercel.app")
+        policy.WithOrigins("https://day-one-api.onrender.com")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());

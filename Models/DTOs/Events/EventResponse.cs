@@ -4,6 +4,8 @@ public class EventResponse
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public string OwnerFirstName { get; set; } = string.Empty;
+    public string OwnerLastName { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
     public DateOnly EventDate { get; set; }
