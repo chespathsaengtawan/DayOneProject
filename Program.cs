@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("EventCalendar", policy =>
-        policy.WithOrigins("https://day-one-api.onrender.com")
+        policy.WithOrigins("https://day-one-web.onrender.com")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
@@ -75,10 +75,11 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+app.UseCors("EventCalendar");
+
 app.MapOpenApi();
 
-
-app.MapScalarApiReference("/api/v1",options =>
+app.MapScalarApiReference("/api/v1", options =>
 {
     options.WithTitle("Event Calendar API")
            .WithTheme(ScalarTheme.Purple)
@@ -86,7 +87,6 @@ app.MapScalarApiReference("/api/v1",options =>
            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
 });
 
-app.UseCors("EventCalendar");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
