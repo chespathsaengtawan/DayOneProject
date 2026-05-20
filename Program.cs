@@ -55,7 +55,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("EventCalendar", policy =>
-        policy.WithOrigins("https://day-one-web.onrender.com")
+        policy.WithOrigins("https://day-one-web.onrender.com","http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
