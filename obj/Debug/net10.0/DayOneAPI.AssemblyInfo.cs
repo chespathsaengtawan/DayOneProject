@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DayOneAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a7e79e9bca05fc720aedff83147cdaa0bf7890c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86675aa5a1a0564ab811b82d899a57307ae10eb0")]
 [assembly: System.Reflection.AssemblyProductAttribute("DayOneAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DayOneAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

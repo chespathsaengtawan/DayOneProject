@@ -115,6 +115,7 @@ public class ShareService : IShareService
                     IsAllDay        = s.Event.IsAllDay,
                     EventCategoryId = s.Event.EventCategoryId,
                     Category        = s.Event.EventCategory != null ? s.Event.EventCategory.Name : null,
+                    CategoryColor   = s.Event.EventCategory != null ? s.Event.EventCategory.Color : null,
                     CreatedAt       = s.Event.CreatedAt,
                     UpdatedAt       = s.Event.UpdatedAt
                 }

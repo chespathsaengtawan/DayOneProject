@@ -44,6 +44,7 @@ public class EventCategoryService : IEventCategoryService
         var category = new EventCategory
         {
             Name      = request.Name.Trim(),
+            Color     = request.Color,
             IsActive  = true,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -70,6 +71,9 @@ public class EventCategoryService : IEventCategoryService
 
             category.Name = request.Name.Trim();
         }
+
+        if (request.Color is not null)
+            category.Color = request.Color;
 
         if (request.IsActive.HasValue)
             category.IsActive = request.IsActive.Value;
@@ -110,6 +114,7 @@ public class EventCategoryService : IEventCategoryService
     {
         Id        = c.Id,
         Name      = c.Name,
+        Color     = c.Color,
         IsActive  = c.IsActive,
         CreatedAt = c.CreatedAt,
         UpdatedAt = c.UpdatedAt

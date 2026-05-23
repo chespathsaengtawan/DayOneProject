@@ -75,6 +75,7 @@ public class FeedService : IFeedService
                 IsAllDay        = e.IsAllDay,
                 EventCategoryId = e.EventCategoryId,
                 CategoryName    = e.EventCategory != null ? e.EventCategory.Name : null,
+                CategoryColor   = e.EventCategory != null ? e.EventCategory.Color : null,
                 OwnerId         = e.UserId,
                 OwnerEmployeeId = e.User!.EmployeeId,
                 OwnerFirstName  = e.User.FirstName,

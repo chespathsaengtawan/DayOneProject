@@ -128,6 +128,7 @@ public class EventService : IEventService
         IsAllDay        = ev.IsAllDay,
         EventCategoryId = ev.EventCategoryId,
         Category        = ev.EventCategory?.Name,
+        CategoryColor   = ev.EventCategory?.Color,
         CreatedAt       = ev.CreatedAt,
         UpdatedAt       = ev.UpdatedAt
     };

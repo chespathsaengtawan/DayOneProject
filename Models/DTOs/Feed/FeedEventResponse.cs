@@ -12,6 +12,7 @@ public class FeedEventResponse
 
     public Guid? EventCategoryId { get; set; }
     public string? CategoryName { get; set; }
+    public string? CategoryColor { get; set; }
 
     public Guid OwnerId { get; set; }
     public string OwnerEmployeeId { get; set; } = string.Empty;

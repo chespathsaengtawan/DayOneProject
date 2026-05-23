@@ -12,6 +12,9 @@ public class EventCategory
     [Required, MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
+    [MaxLength(7)]
+    public string Color { get; set; } = "#3B82F6";
+
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
