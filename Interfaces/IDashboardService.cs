@@ -4,5 +4,5 @@ namespace DayOneAPI.Interfaces;
 
 public interface IDashboardService
 {
-    Task<DashboardResponse> GetDashboardAsync(Guid userId);
+    Task<DashboardResponse> GetDashboardAsync();
 }

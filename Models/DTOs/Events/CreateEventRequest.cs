@@ -18,6 +18,5 @@ public class CreateEventRequest
 
     public bool IsAllDay { get; set; } = false;
 
-    [MaxLength(50)]
-    public string? Category { get; set; }
+    public Guid? EventCategoryId { get; set; }
 }

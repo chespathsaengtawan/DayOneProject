@@ -26,14 +26,16 @@ public class Event
 
     public bool IsAllDay { get; set; } = false;
 
-    [MaxLength(50)]
-    public string? Category { get; set; }
+    public Guid? EventCategoryId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-    // Navigation property
+    // Navigation properties
     [ForeignKey(nameof(UserId))]
     public User? User { get; set; }
+
+    [ForeignKey(nameof(EventCategoryId))]
+    public EventCategory? EventCategory { get; set; }
 }

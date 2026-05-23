@@ -24,6 +24,8 @@ builder.Services.AddScoped<IEventImageService, EventImageService>();
 builder.Services.AddScoped<IFileStorageService, SupabaseStorageService>();
 builder.Services.AddScoped<IShareService, ShareService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IEventCategoryService, EventCategoryService>();
+builder.Services.AddScoped<IFeedService, FeedService>();
 
 // Supabase HTTP client for storage
 builder.Services.AddHttpClient("supabase", (sp, client) =>

@@ -92,6 +92,7 @@ public class ShareService : IShareService
         return await _db.EventShares
             .Where(s => s.SharedWithUserId == userId)
             .Include(s => s.Event)
+            .ThenInclude(e => e!.EventCategory)
             .Include(s => s.SharedByUser)
             .OrderByDescending(s => s.CreatedAt)
             .Select(s => new SharedEventResponse
@@ -102,19 +103,20 @@ public class ShareService : IShareService
                 SharedAt           = s.CreatedAt,
                 Event = new EventResponse
                 {
-                    Id             = s.Event!.Id,
-                    UserId         = s.Event.UserId,
-                    OwnerFirstName = s.SharedByUser!.FirstName,
-                    OwnerLastName  = s.SharedByUser!.LastName,
-                    Title          = s.Event.Title,
-                    Description    = s.Event.Description,
-                    EventDate      = s.Event.EventDate,
-                    StartTime      = s.Event.StartTime,
-                    EndTime        = s.Event.EndTime,
-                    IsAllDay       = s.Event.IsAllDay,
-                    Category       = s.Event.Category,
-                    CreatedAt      = s.Event.CreatedAt,
-                    UpdatedAt      = s.Event.UpdatedAt
+                    Id              = s.Event!.Id,
+                    UserId          = s.Event.UserId,
+                    OwnerFirstName  = s.SharedByUser!.FirstName,
+                    OwnerLastName   = s.SharedByUser!.LastName,
+                    Title           = s.Event.Title,
+                    Description     = s.Event.Description,
+                    EventDate       = s.Event.EventDate,
+                    StartTime       = s.Event.StartTime,
+                    EndTime         = s.Event.EndTime,
+                    IsAllDay        = s.Event.IsAllDay,
+                    EventCategoryId = s.Event.EventCategoryId,
+                    Category        = s.Event.EventCategory != null ? s.Event.EventCategory.Name : null,
+                    CreatedAt       = s.Event.CreatedAt,
+                    UpdatedAt       = s.Event.UpdatedAt
                 }
             })
             .ToListAsync();

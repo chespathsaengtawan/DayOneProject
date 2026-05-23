@@ -14,7 +14,7 @@ public class DashboardService : IDashboardService
         _db = db;
     }
 
-    public async Task<DashboardResponse> GetDashboardAsync(Guid userId)
+    public async Task<DashboardResponse> GetDashboardAsync()
     {
         var today      = DateOnly.FromDateTime(DateTime.UtcNow);
         var weekEnd    = today.AddDays(7);
@@ -22,64 +22,65 @@ public class DashboardService : IDashboardService
         var monthEnd   = monthStart.AddMonths(1).AddDays(-1);
 
         var todayCount = await _db.Events
-            .CountAsync(e => e.UserId == userId && e.EventDate == today);
+            .CountAsync(e => e.EventDate == today);
 
         var thisWeekCount = await _db.Events
-            .CountAsync(e => e.UserId == userId && e.EventDate >= today && e.EventDate <= weekEnd);
+            .CountAsync(e => e.EventDate >= today && e.EventDate <= weekEnd);
 
         var thisMonthCount = await _db.Events
-            .CountAsync(e => e.UserId == userId && e.EventDate >= monthStart && e.EventDate <= monthEnd);
+            .CountAsync(e => e.EventDate >= monthStart && e.EventDate <= monthEnd);
 
         var upcomingEvents = await _db.Events
-            .Where(e => e.UserId == userId && e.EventDate >= today && e.EventDate <= weekEnd)
+            .Where(e => e.EventDate >= today && e.EventDate <= weekEnd)
             .OrderBy(e => e.EventDate)
             .ThenBy(e => e.IsAllDay ? 0 : 1)
             .ThenBy(e => e.StartTime)
             .Take(10)
             .Select(e => new EventResponse
             {
-                Id             = e.Id,
-                UserId         = e.UserId,
-                OwnerFirstName = e.User!.FirstName,
-                OwnerLastName  = e.User!.LastName,
-                Title          = e.Title,
-                Description    = e.Description,
-                EventDate      = e.EventDate,
-                StartTime      = e.StartTime,
-                EndTime        = e.EndTime,
-                IsAllDay       = e.IsAllDay,
-                Category       = e.Category,
-                CreatedAt      = e.CreatedAt,
-                UpdatedAt      = e.UpdatedAt
+                Id              = e.Id,
+                UserId          = e.UserId,
+                OwnerFirstName  = e.User!.FirstName,
+                OwnerLastName   = e.User!.LastName,
+                Title           = e.Title,
+                Description     = e.Description,
+                EventDate       = e.EventDate,
+                StartTime       = e.StartTime,
+                EndTime         = e.EndTime,
+                IsAllDay        = e.IsAllDay,
+                EventCategoryId = e.EventCategoryId,
+                Category        = e.EventCategory != null ? e.EventCategory.Name : null,
+                CreatedAt       = e.CreatedAt,
+                UpdatedAt       = e.UpdatedAt
             })
             .ToListAsync();
 
         var eventsByCategory = await _db.Events
-            .Where(e => e.UserId == userId && e.EventDate >= monthStart && e.EventDate <= monthEnd)
-            .GroupBy(e => e.Category ?? "ไม่ระบุ")
+            .Where(e => e.EventDate >= monthStart && e.EventDate <= monthEnd)
+            .GroupBy(e => e.EventCategory != null ? e.EventCategory.Name : "ไม่ระบุ")
             .Select(g => new CategoryCount { Category = g.Key, Count = g.Count() })
             .OrderByDescending(c => c.Count)
             .ToListAsync();
 
         var recentlyAdded = await _db.Events
-            .Where(e => e.UserId == userId)
             .OrderByDescending(e => e.CreatedAt)
             .Take(5)
             .Select(e => new EventResponse
             {
-                Id             = e.Id,
-                UserId         = e.UserId,
-                OwnerFirstName = e.User!.FirstName,
-                OwnerLastName  = e.User!.LastName,
-                Title          = e.Title,
-                Description    = e.Description,
-                EventDate      = e.EventDate,
-                StartTime      = e.StartTime,
-                EndTime        = e.EndTime,
-                IsAllDay       = e.IsAllDay,
-                Category       = e.Category,
-                CreatedAt      = e.CreatedAt,
-                UpdatedAt      = e.UpdatedAt
+                Id              = e.Id,
+                UserId          = e.UserId,
+                OwnerFirstName  = e.User!.FirstName,
+                OwnerLastName   = e.User!.LastName,
+                Title           = e.Title,
+                Description     = e.Description,
+                EventDate       = e.EventDate,
+                StartTime       = e.StartTime,
+                EndTime         = e.EndTime,
+                IsAllDay        = e.IsAllDay,
+                EventCategoryId = e.EventCategoryId,
+                Category        = e.EventCategory != null ? e.EventCategory.Name : null,
+                CreatedAt       = e.CreatedAt,
+                UpdatedAt       = e.UpdatedAt
             })
             .ToListAsync();
 

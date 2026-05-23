@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
     public DbSet<Event> Events => Set<Event>();
     public DbSet<EventImage> EventImages => Set<EventImage>();
     public DbSet<EventShare> EventShares => Set<EventShare>();
+    public DbSet<EventCategory> EventCategories => Set<EventCategory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +20,12 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Event>()
+            .HasOne(e => e.EventCategory)
+            .WithMany()
+            .HasForeignKey(e => e.EventCategoryId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<EventImage>()
             .HasOne(i => i.Event)
