@@ -21,20 +21,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IEventImageService, EventImageService>();
-builder.Services.AddScoped<IFileStorageService, SupabaseStorageService>();
+builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<IShareService, ShareService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IEventCategoryService, EventCategoryService>();
 builder.Services.AddScoped<IFeedService, FeedService>();
-
-// Supabase HTTP client for storage
-builder.Services.AddHttpClient("supabase", (sp, client) =>
-{
-    var cfg = sp.GetRequiredService<IConfiguration>();
-    client.DefaultRequestHeaders.Authorization =
-        new System.Net.Http.Headers.AuthenticationHeaderValue(
-            "Bearer", cfg["Supabase:ServiceRoleKey"] ?? string.Empty);
-});
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"]!;
@@ -79,9 +70,18 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors("EventCalendar");
 
+// Serve uploaded images
+var uploadsPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+Directory.CreateDirectory(uploadsPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+    RequestPath  = "/uploads"
+});
+
 app.MapOpenApi();
 
-app.MapScalarApiReference("/api/v1", options =>
+app.MapScalarApiReference("docs/v1", options =>
 {
     options.WithTitle("Event Calendar API")
            .WithTheme(ScalarTheme.Purple)

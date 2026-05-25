@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DayOneAPI.Controllers;
 
 [ApiController]
-[Route("api/feed")]
+[Route("feed")]
 public class FeedController : ControllerBase
 {
     private readonly IFeedService _feedService;

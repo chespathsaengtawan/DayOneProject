@@ -21,7 +21,7 @@ public class EventSharesController : ControllerBase
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     // GET /api/events/{eventId}/shares
-    [HttpGet("api/events/{eventId:guid}/shares")]
+    [HttpGet("events/{eventId:guid}/shares")]
     public async Task<IActionResult> GetShares(Guid eventId)
     {
         var shares = await _shareService.GetSharesByEventAsync(GetUserId(), eventId);
@@ -29,7 +29,7 @@ public class EventSharesController : ControllerBase
     }
 
     // POST /api/events/{eventId}/shares
-    [HttpPost("api/events/{eventId:guid}/shares")]
+    [HttpPost("events/{eventId:guid}/shares")]
     public async Task<IActionResult> ShareEvent(Guid eventId, [FromBody] CreateShareRequest request)
     {
         try
@@ -48,7 +48,7 @@ public class EventSharesController : ControllerBase
     }
 
     // DELETE /api/events/{eventId}/shares/{sharedWithUserId}
-    [HttpDelete("api/events/{eventId:guid}/shares/{sharedWithUserId:guid}")]
+    [HttpDelete("events/{eventId:guid}/shares/{sharedWithUserId:guid}")]
     public async Task<IActionResult> RemoveShare(Guid eventId, Guid sharedWithUserId)
     {
         var removed = await _shareService.RemoveShareAsync(GetUserId(), eventId, sharedWithUserId);
@@ -57,7 +57,7 @@ public class EventSharesController : ControllerBase
     }
 
     // GET /api/events/shared-with-me
-    [HttpGet("api/events/shared-with-me")]
+    [HttpGet("events/shared-with-me")]
     public async Task<IActionResult> GetSharedWithMe()
     {
         var events = await _shareService.GetSharedWithMeAsync(GetUserId());

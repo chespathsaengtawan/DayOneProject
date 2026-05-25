@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DayOneAPI.Controllers;
 
 [ApiController]
-[Route("api/events/{eventId:guid}/images")]
+[Route("events/{eventId:guid}/images")]
 [Authorize]
 public class EventImagesController : ControllerBase
 {

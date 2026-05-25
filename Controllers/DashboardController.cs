@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DayOneAPI.Controllers;
 
 [ApiController]
-[Route("api/dashboard")]
+[Route("[controller]")]
 public class DashboardController : ControllerBase
 {
     private readonly IDashboardService _dashboardService;

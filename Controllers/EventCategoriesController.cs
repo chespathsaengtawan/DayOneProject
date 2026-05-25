@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DayOneAPI.Controllers;
 
 [ApiController]
-[Route("api/event-categories")]
+[Route("event-categories")]
 [Authorize]
 public class EventCategoriesController : ControllerBase
 {
